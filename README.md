@@ -8,4 +8,4 @@ Participantes do Backend:
 
 ## Resposabilidades de projeto
 
-As responsabilidades podem ser encontradas aqui().
+As responsabilidades podem ser encontradas [aqui](https://trello.com/b/Z0MCunyn/projeto-de-ferias).
