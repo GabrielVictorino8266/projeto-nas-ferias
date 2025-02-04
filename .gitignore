@@ -1,0 +1,39 @@
+# Ambiente virtual
+venv/
+.env
+*.venv
+*.env
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Configurações do editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos do Django/Migrations
+db.sqlite3
+__pycache__/
+*/__pycache__/
+*.py[cod]
+
+# Arquivos de log e temporários
+*.log
+*.pot
+*.pyc
+*.pyo
+*.~ 
+
+# Arquivos de cache
+.DS_Store
+Thumbs.db
+*.bak
+
+# Migrations ignoradas (opcional, geralmente não recomendado)
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Arquivos estáticos e mídia gerados
+staticfiles/
+media/
