@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-0@ukb6puf4d6@1o!jd8smqujak)g+b^#v!8epf4n!@ac98ljd@
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['projeto-nas-ferias.onrender.com']
 
 
 
