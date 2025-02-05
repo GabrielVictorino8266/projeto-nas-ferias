@@ -8,7 +8,11 @@ SECRET_KEY = 'django-insecure-0@ukb6puf4d6@1o!jd8smqujak)g+b^#v!8epf4n!@ac98ljd@
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['projeto-nas-ferias.onrender.com']
+ALLOWED_HOSTS = [      
+    '127.0.0.1',  # Permite o acesso local
+    'localhost',  # Também permite 'localhost'
+    'projeto-nas-ferias.onrender.com',  # Domínio do Render
+]
 
 
 
