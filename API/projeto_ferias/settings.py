@@ -11,7 +11,7 @@ DEBUG = True
 ALLOWED_HOSTS = [      
     '127.0.0.1',  # Permite o acesso local
     'localhost',  # Também permite 'localhost'
-    'projeto-nas-ferias.onrender.com',  # Domínio do Render
+    'projeto-nas-ferias-tve1.onrender.com',  # Domínio do Render
 ]
 
 
