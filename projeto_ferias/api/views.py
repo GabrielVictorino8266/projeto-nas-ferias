@@ -8,5 +8,3 @@ def RecipeListView(request):
     
     # Retornar as receitas como uma resposta JSON
     return JsonResponse({"recipes": recipes})
-
-# Create your views here.
