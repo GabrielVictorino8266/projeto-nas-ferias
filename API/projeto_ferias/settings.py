@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'recipes'
+    'recipes',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -34,7 +35,37 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # React local
+#     "https://meusite.com",  # Produção
+# ]
+
+# CORS_ALLOW_CREDENTIALS = True # cookies
+
+
+# CORS_ALLOW_METHODS = [
+#     "GET",
+#     "POST",
+#     "PUT",
+#     "PATCH",
+#     "DELETE",
+#     "OPTIONS"
+# ]
+
+"""
+HEADER PERSONALIZADOS
+"""
+# CORS_ALLOW_HEADERS = [ 
+#     "content-type",
+#     "authorization",
+# ]
+
+
 
 ROOT_URLCONF = 'projeto_ferias.urls'
 
