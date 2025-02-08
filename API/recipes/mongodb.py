@@ -40,3 +40,16 @@ def get_all_recipes():
         formatted_recipes.append(formatted_recipe)
 
     return formatted_recipes
+
+
+def save_recipe(title, description, ingredients, instructions, creation_date, ratings):
+    recipe = {
+        "title": title,
+        "description": description,
+        "ingredients": ingredients,
+        "instructions": instructions,
+        "creation_date": creation_date,
+        "ratings": ratings
+    }
+    result = recipes_collection.insert_one(recipe)
+    return result.inserted_id

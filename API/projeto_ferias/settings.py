@@ -1,10 +1,15 @@
 from pathlib import Path
+import environ
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
-SECRET_KEY = 'django-insecure-0@ukb6puf4d6@1o!jd8smqujak)g+b^#v!8epf4n!@ac98ljd@'
+# Lê o arquivo .env
+env = environ.Env()
+environ.Env.read_env()  # Carrega as variáveis do .env
+key = env("SECRET_KEY")
+SECRET_KEY = key
 
 DEBUG = True
 
