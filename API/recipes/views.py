@@ -45,8 +45,7 @@ def add_recipe(request):
             else:
                 creation_date = datetime.utcnow()
 
-            #recipe_id = save_recipe(title, description, ingredients, instructions, creation_date, ratings)
-            recipe_id = 2343223
+            recipe_id = save_recipe(title, description, ingredients, instructions, creation_date, ratings)
 
             return JsonResponse({"message": "Receita adicionada!", "id": str(recipe_id)}, status=201)
 
