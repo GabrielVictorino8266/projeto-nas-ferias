@@ -85,3 +85,16 @@ def get_all_users():
 
     return formatted_users
 
+
+def save_user(name, email, password, creation_date):
+    user = {
+        "name": name,
+        "email": email,
+        "password": password,
+        "creation_date": creation_date,
+        "favorites": list(),
+        "created_recipes": list()
+    }
+    result = users_collection.insert_one(user)
+    return result.inserted_id
+
