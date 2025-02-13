@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponse
-from .mongodb import get_all_recipes, save_recipe
+from .mongodb import get_all_recipes, save_recipe, get_all_users
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from .validations import validate_recipe_data
 
 
@@ -43,9 +43,10 @@ def add_recipe(request):
                 except ValueError:
                     return JsonResponse({"error": "Formato de data inválido"}, status=400)
             else:
-                creation_date = datetime.utcnow()
+                creation_date = datetime.now(timezone.utc).isoformat()
 
-            recipe_id = save_recipe(title, description, ingredients, instructions, creation_date, ratings)
+            #recipe_id = save_recipe(title, description, ingredients, instructions, creation_date, ratings)
+            recipe_id = 0000000000
 
             return JsonResponse({"message": "Receita adicionada!", "id": str(recipe_id)}, status=201)
 
@@ -60,7 +61,14 @@ def add_recipe(request):
     return JsonResponse({"error": "Método não permitido"}, status=405)
 
 
-
+def UserListView(request):
+    # Obter todos usuários
+    if request.method == "GET":
+        users = get_all_users()
+        # Retornar as receitas como uma resposta JSON
+        return JsonResponse({"users": users})
+    else:
+        return JsonResponse({"error": "Método não permitido"}, status=405)
 
 
 

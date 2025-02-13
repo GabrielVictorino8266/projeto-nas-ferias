@@ -13,8 +13,9 @@ mongo_client = MongoClient(MONGO_URI)
 mydb = mongo_client["projetoferias"]
 
 
-# Acessar a coleção de receitas
+# Acessar as coleções
 recipes_collection = mydb.recipes
+users_collection = mydb.users
 
 def get_all_recipes():
     recipes = list(recipes_collection.find())
@@ -53,3 +54,34 @@ def save_recipe(title, description, ingredients, instructions, creation_date, ra
     }
     result = recipes_collection.insert_one(recipe)
     return result.inserted_id
+
+
+
+#-----------------------USERS----------------------------
+
+
+def get_all_users():
+    users = list(users_collection.find())
+
+    formatted_users = []
+    for user in users:
+        user["_id"] = str(user["_id"])
+        
+        if user.get('favorites'):
+            user['favorites'] = str(user['favorites'])
+        if user.get('created_recipes'):
+            user['created_recipes'] = str(user['created_recipes'])
+
+        formatted_recipe = {
+            "id": user.get("_id"),
+            "name": user.get("name"),
+            "email": user.get("email"),
+            "password": user.get("password"),
+            "creation_date": user.get("creation_date"),
+            "favorites": user.get("favorites"),
+            "created_recipes": user.get("created_recipes"),
+        }
+        formatted_users.append(formatted_recipe)
+
+    return formatted_users
+
