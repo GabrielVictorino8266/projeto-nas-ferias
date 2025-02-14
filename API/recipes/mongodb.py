@@ -1,4 +1,6 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+from django.http import JsonResponse
 import environ
 
 # Lê o arquivo .env
@@ -25,9 +27,9 @@ def get_all_recipes():
     for recipe in recipes:
         recipe["_id"] = str(recipe["_id"])  # Converte o ObjectId para string
         
-        # Se o author for uma referência de usuário, apenas obtém o id do usuário
-        if recipe.get('author'):
-            recipe['author'] = str(recipe['author'])  # Converte o author (ObjectId) para string
+        # Se o user for uma referência de usuário, apenas obtém o id do usuário
+        if recipe.get('user'):
+            recipe['user'] = str(recipe['user'])  # Converte o user (ObjectId) para string
         
         formatted_recipe = {
             "id": recipe.get("_id"),  # Agora é uma string
@@ -35,22 +37,24 @@ def get_all_recipes():
             "description": recipe.get("description"),
             "ingredients": recipe.get("ingredients"),
             "instructions": recipe.get("instructions"),
-            "author": recipe.get("author"),  # O author agora é uma string (ObjectId)
+            "user": recipe.get("user"),  # O user agora é uma string (ObjectId)
             "ratings": recipe.get("ratings"),
+            "creation_date": recipe.get("creation_date")
         }
         formatted_recipes.append(formatted_recipe)
 
     return formatted_recipes
 
 
-def save_recipe(title, description, ingredients, instructions, creation_date, ratings):
+def save_recipe(title, description, ingredients, instructions, creation_date, ratings, user):
     recipe = {
         "title": title,
+        "user": user['_id'],
         "description": description,
         "ingredients": ingredients,
         "instructions": instructions,
+        "ratings": ratings,
         "creation_date": creation_date,
-        "ratings": ratings
     }
     result = recipes_collection.insert_one(recipe)
     return result.inserted_id
@@ -98,3 +102,10 @@ def save_user(name, email, password, creation_date):
     result = users_collection.insert_one(user)
     return result.inserted_id
 
+
+def get_data_author(user_id):
+    user = users_collection.find_one({"_id": ObjectId(user_id)})
+    if user:
+        return user
+    else:
+        return JsonResponse({"error": "Usuário não encontrado"}, status=404)
