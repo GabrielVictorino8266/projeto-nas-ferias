@@ -1,8 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse, HttpResponse
 from .mongodb import get_all_recipes, save_recipe, delete_recipe, get_all_users, save_user, get_data_author
+from bson.objectid import ObjectId
 import json
 from datetime import datetime, timezone
 from .validations import validate_recipe_data, validate_user_data
@@ -97,9 +96,8 @@ def Add_recipe(request):
     return JsonResponse({"error": "Método não permitido"}, status=405)
 
 
-@method_decorator(csrf_exempt, name='dispatch') # Disable the CSRF token for this view
-@require_http_methods(["DELETE"])
-def Delete_Recipe(id):
+@csrf_exempt # Disable the CSRF token for this view
+def Delete_Recipe(request, id):
     """
     Deletes a recipe from the database.
     This function handles the deletion of a recipe identified by its unique ID.
@@ -107,11 +105,17 @@ def Delete_Recipe(id):
         RecipeNotFoundError: If the recipe does not exist.
         PermissionError: If the user does not have permission to delete the recipe. (it will be implemented in the future)
     """
-    recipe_id = id
-    if not recipe_id:
+    if request.method != "DELETE":
+        return JsonResponse({"error": "Método não permitido"}, status=405)
+    if not id:
         return JsonResponse({"error": "ID não fornecido"}, status=400)
     
-    deleted_count = delete_recipe(recipe_id)
+    try:
+        ObjectId(id)
+    except:
+        return JsonResponse({"error": "ID inválido"}, status=400)
+    
+    deleted_count = delete_recipe(id)
 
     if deleted_count == 0:
         return JsonResponse({"error": "Receita não encontrada"}, status=404)
