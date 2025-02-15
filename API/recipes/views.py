@@ -1,9 +1,11 @@
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse, HttpResponse
 from .mongodb import get_all_recipes, save_recipe, delete_recipe, get_all_users, save_user, get_data_author
 import json
 from datetime import datetime, timezone
 from .validations import validate_recipe_data, validate_user_data
-from django.views.decorators.http import require_http_methods
 
 
 def RecipeListView(request):
@@ -94,8 +96,10 @@ def Add_recipe(request):
     # Caso o método não seja POST
     return JsonResponse({"error": "Método não permitido"}, status=405)
 
+
+@method_decorator(csrf_exempt, name='dispatch') # Disable the CSRF token for this view
 @require_http_methods(["DELETE"])
-def Delete_Recipe(request, id):
+def Delete_Recipe(id):
     """
     Deletes a recipe from the database.
     This function handles the deletion of a recipe identified by its unique ID.
