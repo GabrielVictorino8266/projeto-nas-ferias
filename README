@@ -28,3 +28,44 @@
     "password": "senha12345"
   }
 ```
+
+# DELETE /recipes/delete/id/
+Request
+- Method: DELETE
+- URL: http://localhost:8000/recipes/delete/id/
+Replace the id by object id of a document.
+
+### Response
+- Success Response:
+  - Code: 200 OK
+  - Content:
+  ```json
+  {
+    "message": "Receita deletada!"
+  }
+  ```
+
+Error Responses:
+  - Code: 400 Bad Request
+  
+    - Content:
+    ```json
+      {
+        "error": "ID não fornecido"
+      }
+    ```
+    
+    - Content:
+    ```json
+      {
+        "error": "ID não fornecido"
+      }
+    ```
+Code: 404 Not Found
+
+  - Content:
+    ```json
+      {
+        "error": "Receita não encontrada"
+      }
+    ```
