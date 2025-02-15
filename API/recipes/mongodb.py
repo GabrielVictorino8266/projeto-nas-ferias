@@ -63,6 +63,11 @@ def save_recipe(title, description, ingredients, instructions, creation_date, ra
 
 #-----------------------USERS----------------------------
 
+def delete_recipe():
+"""
+This function delete a recipe from the database
+"""
+...
 
 def get_all_users():
     users = list(users_collection.find())
