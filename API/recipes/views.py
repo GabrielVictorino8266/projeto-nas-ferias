@@ -1,8 +1,9 @@
 from django.http import JsonResponse, HttpResponse
-from .mongodb import get_all_recipes, save_recipe, get_all_users, save_user, get_data_author
+from .mongodb import get_all_recipes, save_recipe, delete_recipe, get_all_users, save_user, get_data_author
 import json
 from datetime import datetime, timezone
 from .validations import validate_recipe_data, validate_user_data
+from django.views.decorators.http import require_http_methods
 
 
 def RecipeListView(request):
@@ -31,6 +32,10 @@ def Home(request):
                 <tr>
                     <td style="padding: 8px;">POST</td>
                     <td style="padding: 8px;">/recipes/new</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px;">DELETE</td>
+                    <td style="padding: 8px;">recipes/delete/</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px;">GET</td>
@@ -88,6 +93,27 @@ def Add_recipe(request):
 
     # Caso o método não seja POST
     return JsonResponse({"error": "Método não permitido"}, status=405)
+
+@require_http_methods(["DELETE"])
+def Delete_Recipe(request, id):
+    """
+    Deletes a recipe from the database.
+    This function handles the deletion of a recipe identified by its unique ID.
+    Raises:
+        RecipeNotFoundError: If the recipe does not exist.
+        PermissionError: If the user does not have permission to delete the recipe. (it will be implemented in the future)
+    """
+    recipe_id = id
+    if not recipe_id:
+        return JsonResponse({"error": "ID não fornecido"}, status=400)
+    
+    deleted_count = delete_recipe(recipe_id)
+
+    if deleted_count == 0:
+        return JsonResponse({"error": "Receita não encontrada"}, status=404)
+
+    return JsonResponse({"message": "Receita deletada!"}, status=200)
+
 
 
 def UserListView(request):

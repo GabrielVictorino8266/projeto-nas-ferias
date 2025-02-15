@@ -60,14 +60,15 @@ def save_recipe(title, description, ingredients, instructions, creation_date, ra
     return result.inserted_id
 
 
+def delete_recipe(id: str):
+    """
+    This function delete a recipe from the database
+    """
+    result = recipes_collection.delete_one({"_id": ObjectId(id)})
+    return result.deleted_count
 
 #-----------------------USERS----------------------------
 
-def delete_recipe():
-"""
-This function delete a recipe from the database
-"""
-...
 
 def get_all_users():
     users = list(users_collection.find())

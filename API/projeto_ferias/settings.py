@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Lê o arquivo .env
 env = environ.Env()
 environ.Env.read_env()  # Carrega as variáveis do .env
-key = env("SECRET_KEY")
+key = env("MONGO_URI")
 SECRET_KEY = key
 
 DEBUG = True
